@@ -8,7 +8,6 @@ export const TodoApp = () => {
         draggControl,
         onDeleteDirection,
         ondelete,
-        styles,
     } = useDraggList()
 
     return (
