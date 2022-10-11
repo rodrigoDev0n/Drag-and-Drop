@@ -6,10 +6,13 @@ export const TodoApp = () => {
     const {
         currentTask,
         draggControl,
+        onDeleteDirection,
+        ondelete,
+        styles,
     } = useDraggList()
 
     return (
-        <DragDropContext onDragEnd={(res) => draggControl(res)}>
+        <DragDropContext onDragEnd={(res) => draggControl(res)} onDragStart={(res) => onDeleteDirection(res)}>
             <div className="main-flex-container">
                 <Droppable droppableId="todos">
                     {(droppableProvided) => (
@@ -20,12 +23,14 @@ export const TodoApp = () => {
                             {
                                 currentTask.map((t, index) => (
                                     <Draggable key={t.id} draggableId={t.id} index={index}>
-                                        {(draggableP) => (
+                                        {(draggableP, snapshot) => (
                                             <div
                                                 {...draggableP.draggableProps}
                                                 ref={draggableP.innerRef} 
                                                 {...draggableP.dragHandleProps}
-                                                className="no-done-container">
+                                                className={snapshot.isDragging ? 'active-drag-styles' : 'no-done-container'}
+                                                isDragging={snapshot.isDragging}
+                                                >
                                                 <p>{t.description}</p>
                                             </div>
                                         )
@@ -34,6 +39,22 @@ export const TodoApp = () => {
                                 ))
                             }
                             {droppableProvided.placeholder}
+                        </div>
+                    )}
+                </Droppable>
+                <Droppable droppableId="delete">
+                    {(provided) => (
+                        <div
+                            {...provided.droppableProps}
+                            ref={provided.innerRef}
+                            {...provided.dragHandleProps} 
+                            className="delete-section">
+                            <div>
+                                <div>
+                                    <h3>{ondelete}</h3>
+                                </div>
+                            </div>
+                            {provided.placeholder}
                         </div>
                     )}
                 </Droppable>

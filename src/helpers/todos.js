@@ -14,5 +14,13 @@ export const todosObj = [
     {
         id: '4',
         description: 'Comprar pan',
+    },
+    {
+        id: '5',
+        description: 'Tomar agua',
+    },
+    {
+        id: '6',
+        description: 'Estudiar react',
     }
 ] 
